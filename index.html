@@ -1411,7 +1411,13 @@
                     message += `• Experience: ${experienceLevel}\n`;
                 }
                 if (qualifications) {
-                    message += `• Qualifications:\n  ${qualifications.split('\n').join('\n  ')}\n`;
+                    message += `• Qualifications:\n`;
+                    qualifications.split('\n').forEach(line => {
+                        const trimmedLine = line.trim();
+                        if (trimmedLine) {
+                            message += `  • ${trimmedLine}\n`;
+                        }
+                    });
                 }
                 if (skills) {
                     message += `• Skills: ${skills}\n`;
