@@ -750,43 +750,6 @@
                         </div>
                     </div>
 
-                    <!-- Experience & Requirements -->
-                    <div class="section-card glass-card rounded-3xl p-6">
-                        <div class="flex items-center gap-3 mb-5">
-                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
-                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
-                                </svg>
-                            </div>
-                            <h2 class="text-lg font-semibold">Experience & Requirements</h2>
-                        </div>
-                        
-                        <div class="space-y-4">
-                            <div>
-                                <label class="block text-sm font-medium text-white/70 mb-3">Experience Level *</label>
-                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                                    <button type="button" onclick="selectExperience('Entry Level')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Entry Level</button>
-                                    <button type="button" onclick="selectExperience('1-2 Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">1-2 Years</button>
-                                    <button type="button" onclick="selectExperience('3-5 Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">3-5 Years</button>
-                                    <button type="button" onclick="selectExperience('5-10 Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">5-10 Years</button>
-                                    <button type="button" onclick="selectExperience('10+ Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">10+ Years</button>
-                                    <button type="button" onclick="selectExperience('Any')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Any</button>
-                                </div>
-                                <input type="hidden" id="experienceLevel" value="">
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-medium text-white/70 mb-2">Required Qualifications</label>
-                                <textarea id="qualifications" rows="3" placeholder="e.g., Bachelor's degree in Computer Science, Relevant certifications..." class="input-field w-full px-4 py-3 rounded-xl text-white outline-none resize-y"></textarea>
-                            </div>
-                            
-                            <div>
-                                <label class="block text-sm font-medium text-white/70 mb-2">Key Skills (comma separated)</label>
-                                <input type="text" id="skills" placeholder="e.g., JavaScript, React, Node.js, MongoDB" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Job Description -->
                     <div class="section-card glass-card rounded-3xl p-6">
                         <div class="flex items-center gap-3 mb-5">
@@ -833,6 +796,43 @@
                                     </label>
                                 </div>
                                 <input type="text" id="otherBenefits" placeholder="Other benefits (comma separated)" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience & Requirements -->
+                    <div class="section-card glass-card rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold">Experience & Requirements</h2>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-3">Experience Level *</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                    <button type="button" onclick="selectExperience('Entry Level')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Entry Level</button>
+                                    <button type="button" onclick="selectExperience('1-2 Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">1-2 Years</button>
+                                    <button type="button" onclick="selectExperience('3-5 Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">3-5 Years</button>
+                                    <button type="button" onclick="selectExperience('5-10 Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">5-10 Years</button>
+                                    <button type="button" onclick="selectExperience('10+ Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">10+ Years</button>
+                                    <button type="button" onclick="selectExperience('Any')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Any</button>
+                                </div>
+                                <input type="hidden" id="experienceLevel" value="">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Required Qualifications</label>
+                                <textarea id="qualifications" rows="3" placeholder="e.g., Bachelor's degree in Computer Science, Relevant certifications..." class="input-field w-full px-4 py-3 rounded-xl text-white outline-none resize-y"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Key Skills (comma separated)</label>
+                                <input type="text" id="skills" placeholder="e.g., JavaScript, React, Node.js, MongoDB" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
                             </div>
                         </div>
                     </div>
@@ -1404,6 +1404,12 @@
                 message += '\n';
             }
             
+            // Job Description
+            if (jobDescription) {
+                message += `📝 *JOB DESCRIPTION*\n`;
+                message += `${jobDescription}\n\n`;
+            }
+            
             // Experience & Requirements
             if (experienceLevel || qualifications || skills) {
                 message += `📋 *REQUIREMENTS*\n`;
@@ -1423,12 +1429,6 @@
                     message += `• Skills: ${skills}\n`;
                 }
                 message += '\n';
-            }
-            
-            // Job Description
-            if (jobDescription) {
-                message += `📝 *JOB DESCRIPTION*\n`;
-                message += `${jobDescription}\n\n`;
             }
             
             // Benefits
