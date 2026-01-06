@@ -1214,36 +1214,39 @@
                 message += `\n`;
                 const hashtags = ['#Jobs_And_Interns', '#JobVacancy', '#Hiring', '#NowHiring'];
                 
+                // Helper function to sanitize text for hashtags
+                const sanitizeForHashtag = (text) => text.replace(/[^a-zA-Z0-9]/g, '');
+                
                 // Add company name hashtag
                 if (companyName) {
-                    const companyTag = companyName.replace(/[^a-zA-Z0-9]/g, '');
+                    const companyTag = sanitizeForHashtag(companyName);
                     if (companyTag) hashtags.push(`#${companyTag}`);
                 }
                 
                 // Add job title hashtag
                 if (jobTitle) {
-                    const titleTag = jobTitle.replace(/[^a-zA-Z0-9\s]/g, '').split(' ').slice(0, 2).join('');
+                    const titleTag = jobTitle.split(' ').slice(0, 2).map(sanitizeForHashtag).filter(Boolean).join('');
                     if (titleTag) hashtags.push(`#${titleTag}`);
                 }
                 
                 // Add urgency hashtag
                 if (urgency && urgency !== 'Normal') {
-                    hashtags.push(`#${urgency}Hiring`);
+                    hashtags.push(`#${sanitizeForHashtag(urgency)}Hiring`);
                 }
                 
                 // Add work arrangement hashtags
                 if (workTypes.length > 0) {
                     workTypes.forEach(wt => {
-                        const wtTag = wt.replace(/[^a-zA-Z0-9]/g, '');
+                        const wtTag = sanitizeForHashtag(wt);
                         if (wtTag) hashtags.push(`#${wtTag}Jobs`);
                     });
                 }
                 
                 // Add country hashtag
-                if (country) hashtags.push(`#${country.replace(/\s+/g, '')}Jobs`);
+                if (country) hashtags.push(`#${sanitizeForHashtag(country)}Jobs`);
                 
                 // Add industry hashtag
-                if (industry) hashtags.push(`#${industry.replace(/[^a-zA-Z0-9]/g, '')}`);
+                if (industry) hashtags.push(`#${sanitizeForHashtag(industry)}`);
                 
                 message += hashtags.join(' ');
             }
