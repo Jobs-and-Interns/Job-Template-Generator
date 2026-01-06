@@ -586,7 +586,7 @@
                             
                             <div>
                                 <label class="block text-sm font-medium text-white/70 mb-2">Industry / Sector</label>
-                                <select id="industry" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none dropdown-select">
+                                <select id="industry" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none dropdown-select" onchange="toggleOtherIndustry()">
                                     <option value="">Select Industry</option>
                                     <option value="Technology">Technology</option>
                                     <option value="Finance & Banking">Finance & Banking</option>
@@ -602,6 +602,11 @@
                                     <option value="Non-Profit">Non-Profit</option>
                                     <option value="Other">Other</option>
                                 </select>
+                            </div>
+                            
+                            <div id="otherIndustryField" class="hidden">
+                                <label class="block text-sm font-medium text-white/70 mb-2">Please specify Industry / Sector</label>
+                                <input type="text" id="otherIndustry" placeholder="e.g., Agriculture, Real Estate, etc." class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
                             </div>
                             
                             <div>
@@ -734,11 +739,11 @@
                                 <div class="grid sm:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-sm font-medium text-white/70 mb-2">Min Salary</label>
-                                        <input type="number" id="salaryMin" placeholder="e.g., 50000" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                        <input type="number" id="salaryMin" min="0" placeholder="e.g., 50000" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-white/70 mb-2">Max Salary</label>
-                                        <input type="number" id="salaryMax" placeholder="e.g., 80000" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                        <input type="number" id="salaryMax" min="0" placeholder="e.g., 80000" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
                                     </div>
                                 </div>
                             </div>
@@ -1265,12 +1270,34 @@
             updatePreview();
         }
         
+        // Toggle other industry field
+        function toggleOtherIndustry() {
+            const industrySelect = document.getElementById('industry');
+            const otherIndustryField = document.getElementById('otherIndustryField');
+            const otherIndustryInput = document.getElementById('otherIndustry');
+            
+            if (industrySelect.value === 'Other') {
+                otherIndustryField.classList.remove('hidden');
+            } else {
+                otherIndustryField.classList.add('hidden');
+                // Clear the custom industry value when hiding the field
+                otherIndustryInput.value = '';
+            }
+            updatePreview();
+        }
+        
         // Generate message
         function generateMessage() {
             const headerEmoji = document.getElementById('headerEmoji').value || '💼';
             const jobTitle = document.getElementById('jobTitle').value.trim();
             const companyName = document.getElementById('companyName').value.trim();
-            const industry = document.getElementById('industry').value;
+            let industry = document.getElementById('industry').value;
+            
+            // Use custom industry if "Other" is selected
+            if (industry === 'Other') {
+                const otherIndustry = document.getElementById('otherIndustry').value.trim();
+                industry = otherIndustry || 'Other';
+            }
             const workTypes = selectedWorkTypes;
             const country = document.getElementById('country').value.trim();
             const city = document.getElementById('city').value.trim();
@@ -1626,6 +1653,7 @@
                 });
                 
                 document.getElementById('salarySection').classList.add('hidden');
+                document.getElementById('otherIndustryField').classList.add('hidden');
                 document.getElementById('emailField').classList.add('hidden');
                 document.getElementById('phoneField').classList.add('hidden');
                 document.getElementById('linkField').classList.add('hidden');
