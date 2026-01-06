@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JobPost Pro - WhatsApp Job Vacancy Template Generator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'jakarta': ['Plus Jakarta Sans', 'sans-serif'],
+                        'mono': ['Space Mono', 'monospace'],
+                    },
+                    colors: {
+                        'whatsapp': '#25D366',
+                        'whatsapp-dark': '#128C7E',
+                        'midnight': '#0A0F1C',
+                        'slate-850': '#1a2234',
+                        'accent': '#FF6B35',
+                        'accent-light': '#FF8F66',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        * {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0A0F1C 0%, #1a2234 50%, #0f172a 100%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .input-field {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #25D366;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+        }
+        
+        .input-field::placeholder {
+            color: rgba(255, 255, 255, 0.3);
+        }
+        
+        .emoji-btn {
+            transition: all 0.2s ease;
+        }
+        
+        .emoji-btn:hover {
+            transform: scale(1.2);
+        }
+        
+        .emoji-btn.selected {
+            background: rgba(37, 211, 102, 0.2);
+            border-color: #25D366;
+        }
+        
+        .preview-box {
+            background: linear-gradient(145deg, #075E54 0%, #128C7E 100%);
+            font-family: 'Segoe UI', system-ui, sans-serif;
+        }
+        
+        .preview-message {
+            background: #E7FFDB;
+            color: #111b21;
+            border-radius: 0 8px 8px 8px;
+            position: relative;
+        }
+        
+        .preview-message::before {
+            content: '';
+            position: absolute;
+            left: -8px;
+            top: 0;
+            border-width: 0 8px 8px 0;
+            border-style: solid;
+            border-color: transparent #E7FFDB transparent transparent;
+        }
+        
+        .toggle-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .toggle-btn.active {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        .section-card {
+            animation: fadeInUp 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .section-card:nth-child(1) { animation-delay: 0.1s; }
+        .section-card:nth-child(2) { animation-delay: 0.2s; }
+        .section-card:nth-child(3) { animation-delay: 0.3s; }
+        .section-card:nth-child(4) { animation-delay: 0.4s; }
+        .section-card:nth-child(5) { animation-delay: 0.5s; }
+        .section-card:nth-child(6) { animation-delay: 0.6s; }
+        
+        .copy-btn {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .floating-shapes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            pointer-events: none;
+        }
+        
+        .shape {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.03;
+        }
+        
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            background: #25D366;
+            top: -100px;
+            right: -100px;
+        }
+        
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            background: #FF6B35;
+            bottom: 20%;
+            left: -150px;
+        }
+        
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            background: #25D366;
+            bottom: -50px;
+            right: 20%;
+        }
+        
+        .checkbox-custom {
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            border-radius: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .checkbox-custom:checked {
+            background: #25D366;
+            border-color: #25D366;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='white' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12.207 4.793a1 1 0 010 1.414l-5 5a1 1 0 01-1.414 0l-2-2a1 1 0 011.414-1.414L6.5 9.086l4.293-4.293a1 1 0 011.414 0z'/%3E%3C/svg%3E");
+        }
+        
+        .salary-range-slider {
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 3px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .salary-range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #25D366;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(37, 211, 102, 0.3);
+        }
+        
+        .notification {
+            animation: slideIn 0.3s ease, slideOut 0.3s ease 2.7s forwards;
+        }
+        
+        @keyframes slideIn {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes slideOut {
+            from { transform: translateY(0); opacity: 1; }
+            to { transform: translateY(-100%); opacity: 0; }
+        }
+        
+        .pulse-ring {
+            animation: pulse-ring 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+        
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 1; }
+            80%, 100% { transform: scale(2); opacity: 0; }
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.05);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="gradient-bg min-h-screen text-white">
+    <!-- Floating Shapes -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+    
+    <!-- Notification -->
+    <div id="notification" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 hidden">
+        <div class="notification bg-whatsapp text-white px-6 py-3 rounded-full flex items-center gap-3 shadow-lg">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+            </svg>
+            <span class="font-medium">Message copied to clipboard!</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="relative z-10 py-6 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="relative">
+                        <div class="w-12 h-12 rounded-2xl bg-gradient-to-br from-whatsapp to-whatsapp-dark flex items-center justify-center">
+                            <svg class="w-7 h-7 text-white" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                            </svg>
+                        </div>
+                        <div class="absolute -bottom-1 -right-1 w-5 h-5 bg-accent rounded-full flex items-center justify-center">
+                            <span class="text-xs font-bold">+</span>
+                        </div>
+                    </div>
+                    <div>
+                        <h1 class="text-xl sm:text-2xl font-bold">JobPost Pro</h1>
+                        <p class="text-xs sm:text-sm text-white/50">WhatsApp Template Generator</p>
+                    </div>
+                </div>
+                <button onclick="resetForm()" class="px-4 py-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 text-sm font-medium transition-all flex items-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                    </svg>
+                    <span class="hidden sm:inline">Reset</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative z-10 px-4 sm:px-6 lg:px-8 pb-12">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid lg:grid-cols-2 gap-8">
+                <!-- Form Section -->
+                <div class="space-y-6">
+                    <!-- Job Title & Company -->
+                    <div class="section-card glass-card rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-blue-600 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold">Basic Information</h2>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Job Title / Designation *</label>
+                                <input type="text" id="jobTitle" placeholder="e.g., Senior Software Engineer" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Company Name *</label>
+                                <input type="text" id="companyName" placeholder="e.g., Tech Solutions Ltd." class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Industry / Sector</label>
+                                <select id="industry" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none bg-transparent">
+                                    <option value="">Select Industry</option>
+                                    <option value="Technology">Technology</option>
+                                    <option value="Finance & Banking">Finance & Banking</option>
+                                    <option value="Healthcare">Healthcare</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Retail">Retail</option>
+                                    <option value="Manufacturing">Manufacturing</option>
+                                    <option value="Hospitality">Hospitality</option>
+                                    <option value="Construction">Construction</option>
+                                    <option value="Media & Entertainment">Media & Entertainment</option>
+                                    <option value="Consulting">Consulting</option>
+                                    <option value="Government">Government</option>
+                                    <option value="Non-Profit">Non-Profit</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Post Emoji</label>
+                                <div class="flex flex-wrap gap-2">
+                                    <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="🚀" class="emoji-btn w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10">🚀</button>
+                                    <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="💼" class="emoji-btn w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10">💼</button>
+                                    <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="🔥" class="emoji-btn w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10">🔥</button>
+                                    <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="⭐" class="emoji-btn w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10">⭐</button>
+                                    <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="🎯" class="emoji-btn w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10">🎯</button>
+                                    <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="💡" class="emoji-btn w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10">💡</button>
+                                    <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="🌟" class="emoji-btn w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10">🌟</button>
+                                    <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="📢" class="emoji-btn w-10 h-10 rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10">📢</button>
+                                </div>
+                                <input type="hidden" id="headerEmoji" value="💼">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Work Type & Location -->
+                    <div class="section-card glass-card rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-green-500 to-green-600 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold">Work Type & Location</h2>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-3">Work Arrangement *</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                    <button type="button" onclick="selectWorkType('On-Site')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🏢 On-Site</button>
+                                    <button type="button" onclick="selectWorkType('Remote')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🏠 Remote</button>
+                                    <button type="button" onclick="selectWorkType('Hybrid')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🔄 Hybrid</button>
+                                    <button type="button" onclick="selectWorkType('WFH')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">💻 WFH</button>
+                                </div>
+                                <input type="hidden" id="workType" value="">
+                            </div>
+                            
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-white/70 mb-2">Country *</label>
+                                    <input type="text" id="country" placeholder="e.g., Sri Lanka" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-white/70 mb-2">City / Location</label>
+                                    <input type="text" id="city" placeholder="e.g., Colombo" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Employment & Salary -->
+                    <div class="section-card glass-card rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-yellow-500 to-orange-500 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold">Employment & Salary</h2>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-3">Employment Type *</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                    <button type="button" onclick="selectEmploymentType('Full-Time')" class="toggle-btn emp-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Full-Time</button>
+                                    <button type="button" onclick="selectEmploymentType('Part-Time')" class="toggle-btn emp-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Part-Time</button>
+                                    <button type="button" onclick="selectEmploymentType('Contract')" class="toggle-btn emp-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Contract</button>
+                                    <button type="button" onclick="selectEmploymentType('Internship')" class="toggle-btn emp-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Internship</button>
+                                    <button type="button" onclick="selectEmploymentType('Freelance')" class="toggle-btn emp-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Freelance</button>
+                                    <button type="button" onclick="selectEmploymentType('Temporary')" class="toggle-btn emp-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Temporary</button>
+                                </div>
+                                <input type="hidden" id="employmentType" value="">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-3">Compensation *</label>
+                                <div class="flex gap-2 mb-4">
+                                    <button type="button" onclick="selectPaidStatus('Paid')" class="toggle-btn paid-status px-6 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all flex items-center gap-2">
+                                        <span class="text-lg">💰</span> Paid
+                                    </button>
+                                    <button type="button" onclick="selectPaidStatus('Unpaid')" class="toggle-btn paid-status px-6 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all flex items-center gap-2">
+                                        <span class="text-lg">🎓</span> Unpaid
+                                    </button>
+                                    <button type="button" onclick="selectPaidStatus('Negotiable')" class="toggle-btn paid-status px-6 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all flex items-center gap-2">
+                                        <span class="text-lg">🤝</span> Negotiable
+                                    </button>
+                                </div>
+                                <input type="hidden" id="paidStatus" value="">
+                            </div>
+                            
+                            <div id="salarySection" class="space-y-4 hidden">
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-white/70 mb-2">Currency</label>
+                                        <select id="currency" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none bg-transparent">
+                                            <option value="LKR">LKR - Sri Lankan Rupee</option>
+                                            <option value="USD">USD - US Dollar</option>
+                                            <option value="EUR">EUR - Euro</option>
+                                            <option value="GBP">GBP - British Pound</option>
+                                            <option value="INR">INR - Indian Rupee</option>
+                                            <option value="AUD">AUD - Australian Dollar</option>
+                                            <option value="CAD">CAD - Canadian Dollar</option>
+                                            <option value="SGD">SGD - Singapore Dollar</option>
+                                            <option value="AED">AED - UAE Dirham</option>
+                                        </select>
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-white/70 mb-2">Salary Period</label>
+                                        <select id="salaryPeriod" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none bg-transparent">
+                                            <option value="per month">Per Month</option>
+                                            <option value="per year">Per Year</option>
+                                            <option value="per hour">Per Hour</option>
+                                            <option value="per day">Per Day</option>
+                                            <option value="per week">Per Week</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid sm:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-white/70 mb-2">Min Salary</label>
+                                        <input type="number" id="salaryMin" placeholder="e.g., 50000" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                    </div>
+                                    <div>
+                                        <label class="block text-sm font-medium text-white/70 mb-2">Max Salary</label>
+                                        <input type="number" id="salaryMax" placeholder="e.g., 80000" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Experience & Requirements -->
+                    <div class="section-card glass-card rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-purple-500 to-purple-600 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold">Experience & Requirements</h2>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-3">Experience Level *</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                    <button type="button" onclick="selectExperience('Entry Level')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Entry Level</button>
+                                    <button type="button" onclick="selectExperience('1-2 Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">1-2 Years</button>
+                                    <button type="button" onclick="selectExperience('3-5 Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">3-5 Years</button>
+                                    <button type="button" onclick="selectExperience('5-10 Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">5-10 Years</button>
+                                    <button type="button" onclick="selectExperience('10+ Years')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">10+ Years</button>
+                                    <button type="button" onclick="selectExperience('Any')" class="toggle-btn exp-level px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Any</button>
+                                </div>
+                                <input type="hidden" id="experienceLevel" value="">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Required Qualifications</label>
+                                <textarea id="qualifications" rows="3" placeholder="e.g., Bachelor's degree in Computer Science, Relevant certifications..." class="input-field w-full px-4 py-3 rounded-xl text-white outline-none resize-none"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Key Skills (comma separated)</label>
+                                <input type="text" id="skills" placeholder="e.g., JavaScript, React, Node.js, MongoDB" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Job Description -->
+                    <div class="section-card glass-card rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-pink-500 to-rose-500 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold">Job Description</h2>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Job Description *</label>
+                                <textarea id="jobDescription" rows="5" placeholder="Describe the role, responsibilities, and what you're looking for in a candidate..." class="input-field w-full px-4 py-3 rounded-xl text-white outline-none resize-none"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Benefits & Perks</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 mb-3">
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="checkbox-custom" value="Health Insurance" onchange="updateBenefits()">
+                                        <span class="text-sm">🏥 Health Insurance</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="checkbox-custom" value="Paid Leave" onchange="updateBenefits()">
+                                        <span class="text-sm">🏖️ Paid Leave</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="checkbox-custom" value="Flexible Hours" onchange="updateBenefits()">
+                                        <span class="text-sm">⏰ Flexible Hours</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="checkbox-custom" value="Training" onchange="updateBenefits()">
+                                        <span class="text-sm">📚 Training</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="checkbox-custom" value="Bonus" onchange="updateBenefits()">
+                                        <span class="text-sm">🎁 Bonus</span>
+                                    </label>
+                                    <label class="flex items-center gap-2 cursor-pointer">
+                                        <input type="checkbox" class="checkbox-custom" value="Transport" onchange="updateBenefits()">
+                                        <span class="text-sm">🚗 Transport</span>
+                                    </label>
+                                </div>
+                                <input type="text" id="otherBenefits" placeholder="Other benefits (comma separated)" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Application Details -->
+                    <div class="section-card glass-card rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-cyan-500 to-teal-500 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4H6a2 2 0 00-2 2v12a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-2m-4-1v8m0 0l3-3m-3 3L9 8m-5 5h2.586a1 1 0 01.707.293l2.414 2.414a1 1 0 00.707.293h3.172a1 1 0 00.707-.293l2.414-2.414a1 1 0 01.707-.293H20"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold">Application Details</h2>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-3">How to Apply *</label>
+                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                                    <button type="button" onclick="selectApplyMethod('Email')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">📧 Email</button>
+                                    <button type="button" onclick="selectApplyMethod('WhatsApp')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">💬 WhatsApp</button>
+                                    <button type="button" onclick="selectApplyMethod('Link')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🔗 Apply Link</button>
+                                    <button type="button" onclick="selectApplyMethod('Walk-in')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🚶 Walk-in</button>
+                                    <button type="button" onclick="selectApplyMethod('Multiple')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">📋 Multiple</button>
+                                </div>
+                                <input type="hidden" id="applyMethod" value="">
+                            </div>
+                            
+                            <div id="emailField" class="hidden">
+                                <label class="block text-sm font-medium text-white/70 mb-2">Email Address</label>
+                                <input type="email" id="email" placeholder="e.g., hr@company.com" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                            
+                            <div id="phoneField" class="hidden">
+                                <label class="block text-sm font-medium text-white/70 mb-2">WhatsApp / Phone Number</label>
+                                <input type="tel" id="phone" placeholder="e.g., +94 77 123 4567" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                            
+                            <div id="linkField" class="hidden">
+                                <label class="block text-sm font-medium text-white/70 mb-2">Application Link</label>
+                                <input type="url" id="applyLink" placeholder="e.g., https://company.com/careers/apply" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                            
+                            <div id="walkInField" class="hidden">
+                                <label class="block text-sm font-medium text-white/70 mb-2">Walk-in Address & Time</label>
+                                <textarea id="walkInDetails" rows="2" placeholder="e.g., 123 Main Street, Colombo 03. Mon-Fri 9AM-5PM" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none resize-none"></textarea>
+                            </div>
+                            
+                            <div class="grid sm:grid-cols-2 gap-4">
+                                <div>
+                                    <label class="block text-sm font-medium text-white/70 mb-2">Application Deadline</label>
+                                    <input type="date" id="deadline" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-white/70 mb-2">Contact Person</label>
+                                    <input type="text" id="contactPerson" placeholder="e.g., Mr. John Doe" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Email Subject (for applicants)</label>
+                                <input type="text" id="emailSubject" placeholder="e.g., Application for Senior Software Engineer" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Options -->
+                    <div class="section-card glass-card rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-5">
+                            <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-500 to-amber-600 flex items-center justify-center">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                                </svg>
+                            </div>
+                            <h2 class="text-lg font-semibold">Additional Options</h2>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Number of Vacancies</label>
+                                <input type="number" id="vacancies" placeholder="e.g., 5" min="1" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-3">Urgency Level</label>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button type="button" onclick="selectUrgency('Normal')" class="toggle-btn urgency px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">Normal</button>
+                                    <button type="button" onclick="selectUrgency('Urgent')" class="toggle-btn urgency px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🔴 Urgent</button>
+                                    <button type="button" onclick="selectUrgency('Immediate')" class="toggle-btn urgency px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">⚡ Immediate</button>
+                                </div>
+                                <input type="hidden" id="urgency" value="Normal">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-2">Additional Notes</label>
+                                <textarea id="additionalNotes" rows="2" placeholder="Any other information for job seekers..." class="input-field w-full px-4 py-3 rounded-xl text-white outline-none resize-none"></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="flex items-center gap-3 cursor-pointer">
+                                    <input type="checkbox" id="includeHashtags" class="checkbox-custom" checked>
+                                    <span class="text-sm text-white/70">Include hashtags for better visibility</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Preview Section -->
+                <div class="lg:sticky lg:top-6 lg:self-start space-y-6">
+                    <div class="glass-card rounded-3xl p-6">
+                        <div class="flex items-center justify-between mb-5">
+                            <div class="flex items-center gap-3">
+                                <div class="relative">
+                                    <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-whatsapp to-whatsapp-dark flex items-center justify-center">
+                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="absolute -top-1 -right-1 w-4 h-4 bg-green-500 rounded-full pulse-ring"></div>
+                                </div>
+                                <h2 class="text-lg font-semibold">Live Preview</h2>
+                            </div>
+                            <span class="text-xs text-white/40 bg-white/5 px-3 py-1 rounded-full">Auto-updating</span>
+                        </div>
+                        
+                        <!-- WhatsApp Preview -->
+                        <div class="preview-box rounded-2xl p-4 mb-4 min-h-[400px] max-h-[600px] overflow-y-auto">
+                            <div class="preview-message p-4 text-sm leading-relaxed whitespace-pre-wrap" id="previewMessage">
+                                <span class="text-gray-500 italic">Fill in the form to see your message preview...</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Character Count -->
+                        <div class="flex items-center justify-between mb-4 px-2">
+                            <span class="text-sm text-white/50">Character Count: <span id="charCount" class="font-mono text-whatsapp">0</span></span>
+                            <span class="text-xs text-white/30">Optimal: &lt; 4000 chars</span>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="space-y-3">
+                            <button onclick="copyToClipboard()" class="copy-btn w-full py-4 rounded-2xl font-semibold text-white flex items-center justify-center gap-3">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3"></path>
+                                </svg>
+                                Copy Message to Clipboard
+                            </button>
+                            
+                            <div class="grid grid-cols-2 gap-3">
+                                <button onclick="shareToWhatsApp()" class="px-4 py-3 rounded-xl bg-whatsapp/20 border border-whatsapp/30 text-whatsapp font-medium hover:bg-whatsapp/30 transition-all flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+                                    </svg>
+                                    Share
+                                </button>
+                                <button onclick="downloadAsText()" class="px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white/70 font-medium hover:bg-white/10 transition-all flex items-center justify-center gap-2">
+                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                    </svg>
+                                    Download
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tips Card -->
+                    <div class="glass-card rounded-3xl p-6">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-8 h-8 rounded-lg bg-amber-500/20 flex items-center justify-center">
+                                <span class="text-lg">💡</span>
+                            </div>
+                            <h3 class="font-semibold">Pro Tips</h3>
+                        </div>
+                        <ul class="space-y-2 text-sm text-white/60">
+                            <li class="flex items-start gap-2">
+                                <span class="text-whatsapp mt-0.5">✓</span>
+                                <span>Keep job descriptions concise and scannable</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-whatsapp mt-0.5">✓</span>
+                                <span>Include salary range for better response rates</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-whatsapp mt-0.5">✓</span>
+                                <span>Add clear application instructions</span>
+                            </li>
+                            <li class="flex items-start gap-2">
+                                <span class="text-whatsapp mt-0.5">✓</span>
+                                <span>Use emojis sparingly for visual appeal</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="relative z-10 py-6 px-4 border-t border-white/5">
+        <div class="max-w-7xl mx-auto text-center">
+            <p class="text-sm text-white/30">JobPost Pro - WhatsApp Job Vacancy Template Generator</p>
+        </div>
+    </footer>
+
+    <script>
+        // State management
+        let selectedBenefits = [];
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Add event listeners to all inputs
+            const inputs = document.querySelectorAll('input, textarea, select');
+            inputs.forEach(input => {
+                input.addEventListener('input', updatePreview);
+                input.addEventListener('change', updatePreview);
+            });
+            
+            // Set default emoji
+            selectEmoji(document.querySelector('[data-emoji="💼"]'), 'header');
+            
+            updatePreview();
+        });
+        
+        // Selection functions
+        function selectEmoji(btn, type) {
+            const container = btn.parentElement;
+            container.querySelectorAll('.emoji-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+            document.getElementById(type + 'Emoji').value = btn.dataset.emoji;
+            updatePreview();
+        }
+        
+        function selectWorkType(type) {
+            document.querySelectorAll('.work-type').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('workType').value = type;
+            updatePreview();
+        }
+        
+        function selectEmploymentType(type) {
+            document.querySelectorAll('.emp-type').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('employmentType').value = type;
+            updatePreview();
+        }
+        
+        function selectPaidStatus(status) {
+            document.querySelectorAll('.paid-status').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('paidStatus').value = status;
+            
+            // Show/hide salary section
+            const salarySection = document.getElementById('salarySection');
+            if (status === 'Paid' || status === 'Negotiable') {
+                salarySection.classList.remove('hidden');
+            } else {
+                salarySection.classList.add('hidden');
+            }
+            updatePreview();
+        }
+        
+        function selectExperience(level) {
+            document.querySelectorAll('.exp-level').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('experienceLevel').value = level;
+            updatePreview();
+        }
+        
+        function selectApplyMethod(method) {
+            document.querySelectorAll('.apply-method').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('applyMethod').value = method;
+            
+            // Show/hide relevant fields
+            const emailField = document.getElementById('emailField');
+            const phoneField = document.getElementById('phoneField');
+            const linkField = document.getElementById('linkField');
+            const walkInField = document.getElementById('walkInField');
+            
+            emailField.classList.add('hidden');
+            phoneField.classList.add('hidden');
+            linkField.classList.add('hidden');
+            walkInField.classList.add('hidden');
+            
+            switch(method) {
+                case 'Email':
+                    emailField.classList.remove('hidden');
+                    break;
+                case 'WhatsApp':
+                    phoneField.classList.remove('hidden');
+                    break;
+                case 'Link':
+                    linkField.classList.remove('hidden');
+                    break;
+                case 'Walk-in':
+                    walkInField.classList.remove('hidden');
+                    break;
+                case 'Multiple':
+                    emailField.classList.remove('hidden');
+                    phoneField.classList.remove('hidden');
+                    linkField.classList.remove('hidden');
+                    break;
+            }
+            updatePreview();
+        }
+        
+        function selectUrgency(level) {
+            document.querySelectorAll('.urgency').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('urgency').value = level;
+            updatePreview();
+        }
+        
+        function updateBenefits() {
+            const checkboxes = document.querySelectorAll('.checkbox-custom[value]');
+            selectedBenefits = [];
+            checkboxes.forEach(cb => {
+                if (cb.checked && cb.value) {
+                    selectedBenefits.push(cb.value);
+                }
+            });
+            updatePreview();
+        }
+        
+        // Generate message
+        function generateMessage() {
+            const headerEmoji = document.getElementById('headerEmoji').value || '💼';
+            const jobTitle = document.getElementById('jobTitle').value.trim();
+            const companyName = document.getElementById('companyName').value.trim();
+            const industry = document.getElementById('industry').value;
+            const workType = document.getElementById('workType').value;
+            const country = document.getElementById('country').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const employmentType = document.getElementById('employmentType').value;
+            const paidStatus = document.getElementById('paidStatus').value;
+            const currency = document.getElementById('currency').value;
+            const salaryMin = document.getElementById('salaryMin').value;
+            const salaryMax = document.getElementById('salaryMax').value;
+            const salaryPeriod = document.getElementById('salaryPeriod').value;
+            const experienceLevel = document.getElementById('experienceLevel').value;
+            const qualifications = document.getElementById('qualifications').value.trim();
+            const skills = document.getElementById('skills').value.trim();
+            const jobDescription = document.getElementById('jobDescription').value.trim();
+            const otherBenefits = document.getElementById('otherBenefits').value.trim();
+            const applyMethod = document.getElementById('applyMethod').value;
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const applyLink = document.getElementById('applyLink').value.trim();
+            const walkInDetails = document.getElementById('walkInDetails').value.trim();
+            const deadline = document.getElementById('deadline').value;
+            const contactPerson = document.getElementById('contactPerson').value.trim();
+            const emailSubject = document.getElementById('emailSubject').value.trim();
+            const vacancies = document.getElementById('vacancies').value;
+            const urgency = document.getElementById('urgency').value;
+            const additionalNotes = document.getElementById('additionalNotes').value.trim();
+            const includeHashtags = document.getElementById('includeHashtags').checked;
+            
+            if (!jobTitle && !companyName) {
+                return '';
+            }
+            
+            let message = '';
+            
+            // Header with urgency
+            if (urgency === 'Urgent') {
+                message += `🔴 *URGENT HIRING* 🔴\n\n`;
+            } else if (urgency === 'Immediate') {
+                message += `⚡ *IMMEDIATE OPENING* ⚡\n\n`;
+            }
+            
+            // Main header
+            message += `${headerEmoji} *JOB VACANCY* ${headerEmoji}\n`;
+            message += `━━━━━━━━━━━━━━━━━━━━\n\n`;
+            
+            // Job title and company
+            if (jobTitle) {
+                message += `📌 *Position:* ${jobTitle}\n`;
+            }
+            if (companyName) {
+                message += `🏢 *Company:* ${companyName}\n`;
+            }
+            if (industry) {
+                message += `🏭 *Industry:* ${industry}\n`;
+            }
+            
+            message += '\n';
+            
+            // Location section
+            if (workType || country || city) {
+                message += `📍 *LOCATION*\n`;
+                if (country || city) {
+                    const location = [city, country].filter(Boolean).join(', ');
+                    message += `• ${location}\n`;
+                }
+                if (workType) {
+                    const workEmoji = {
+                        'On-Site': '🏢',
+                        'Remote': '🏠',
+                        'Hybrid': '🔄',
+                        'WFH': '💻'
+                    };
+                    message += `• ${workEmoji[workType] || ''} ${workType}\n`;
+                }
+                message += '\n';
+            }
+            
+            // Employment details
+            if (employmentType || paidStatus || vacancies) {
+                message += `💼 *EMPLOYMENT DETAILS*\n`;
+                if (employmentType) {
+                    message += `• Type: ${employmentType}\n`;
+                }
+                if (vacancies) {
+                    message += `• Vacancies: ${vacancies}\n`;
+                }
+                if (paidStatus) {
+                    if (paidStatus === 'Paid' && (salaryMin || salaryMax)) {
+                        let salary = '';
+                        if (salaryMin && salaryMax) {
+                            salary = `${currency} ${Number(salaryMin).toLocaleString()} - ${Number(salaryMax).toLocaleString()} ${salaryPeriod}`;
+                        } else if (salaryMin) {
+                            salary = `${currency} ${Number(salaryMin).toLocaleString()}+ ${salaryPeriod}`;
+                        } else if (salaryMax) {
+                            salary = `Up to ${currency} ${Number(salaryMax).toLocaleString()} ${salaryPeriod}`;
+                        }
+                        message += `• 💰 Salary: ${salary}\n`;
+                    } else if (paidStatus === 'Negotiable') {
+                        message += `• 💰 Salary: Negotiable\n`;
+                    } else if (paidStatus === 'Unpaid') {
+                        message += `• 🎓 Unpaid (Training/Internship)\n`;
+                    }
+                }
+                message += '\n';
+            }
+            
+            // Experience & Requirements
+            if (experienceLevel || qualifications || skills) {
+                message += `📋 *REQUIREMENTS*\n`;
+                if (experienceLevel) {
+                    message += `• Experience: ${experienceLevel}\n`;
+                }
+                if (qualifications) {
+                    message += `• Qualifications:\n  ${qualifications.split('\n').join('\n  ')}\n`;
+                }
+                if (skills) {
+                    message += `• Skills: ${skills}\n`;
+                }
+                message += '\n';
+            }
+            
+            // Job Description
+            if (jobDescription) {
+                message += `📝 *JOB DESCRIPTION*\n`;
+                message += `${jobDescription}\n\n`;
+            }
+            
+            // Benefits
+            const allBenefits = [...selectedBenefits];
+            if (otherBenefits) {
+                otherBenefits.split(',').forEach(b => {
+                    if (b.trim()) allBenefits.push(b.trim());
+                });
+            }
+            if (allBenefits.length > 0) {
+                message += `🎁 *BENEFITS*\n`;
+                allBenefits.forEach(benefit => {
+                    message += `• ${benefit}\n`;
+                });
+                message += '\n';
+            }
+            
+            // How to Apply
+            message += `📩 *HOW TO APPLY*\n`;
+            message += `━━━━━━━━━━━━━━━━━━━━\n`;
+            
+            if (email) {
+                message += `📧 Email: ${email}\n`;
+                if (emailSubject) {
+                    message += `   Subject: "${emailSubject}"\n`;
+                }
+            }
+            if (phone) {
+                message += `📱 WhatsApp/Call: ${phone}\n`;
+            }
+            if (applyLink) {
+                message += `🔗 Apply Here: ${applyLink}\n`;
+            }
+            if (walkInDetails) {
+                message += `🚶 Walk-in:\n   ${walkInDetails}\n`;
+            }
+            if (contactPerson) {
+                message += `👤 Contact: ${contactPerson}\n`;
+            }
+            if (deadline) {
+                const deadlineDate = new Date(deadline);
+                const formattedDeadline = deadlineDate.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                });
+                message += `⏰ Deadline: ${formattedDeadline}\n`;
+            }
+            
+            // Additional notes
+            if (additionalNotes) {
+                message += `\n📌 *Note:* ${additionalNotes}\n`;
+            }
+            
+            // Footer
+            message += `\n━━━━━━━━━━━━━━━━━━━━\n`;
+            message += `🔄 Share this opportunity!\n`;
+            
+            // Hashtags
+            if (includeHashtags) {
+                message += `\n`;
+                const hashtags = ['#JobVacancy', '#Hiring', '#NowHiring'];
+                if (country) hashtags.push(`#${country.replace(/\s+/g, '')}Jobs`);
+                if (industry) hashtags.push(`#${industry.replace(/\s+/g, '')}`);
+                if (jobTitle) {
+                    const titleTag = jobTitle.split(' ').slice(0, 2).join('');
+                    hashtags.push(`#${titleTag}`);
+                }
+                message += hashtags.join(' ');
+            }
+            
+            return message;
+        }
+        
+        // Update preview
+        function updatePreview() {
+            const message = generateMessage();
+            const previewElement = document.getElementById('previewMessage');
+            const charCountElement = document.getElementById('charCount');
+            
+            if (message) {
+                // Convert WhatsApp formatting to HTML for preview
+                let htmlMessage = message
+                    .replace(/\*([^*]+)\*/g, '<strong>$1</strong>')
+                    .replace(/\n/g, '<br>');
+                previewElement.innerHTML = htmlMessage;
+            } else {
+                previewElement.innerHTML = '<span class="text-gray-500 italic">Fill in the form to see your message preview...</span>';
+            }
+            
+            charCountElement.textContent = message.length;
+            
+            // Color code character count
+            if (message.length > 4000) {
+                charCountElement.classList.remove('text-whatsapp');
+                charCountElement.classList.add('text-red-400');
+            } else {
+                charCountElement.classList.add('text-whatsapp');
+                charCountElement.classList.remove('text-red-400');
+            }
+        }
+        
+        // Copy to clipboard
+        async function copyToClipboard() {
+            const message = generateMessage();
+            if (!message) {
+                alert('Please fill in at least the job title and company name.');
+                return;
+            }
+            
+            try {
+                await navigator.clipboard.writeText(message);
+                showNotification();
+            } catch (err) {
+                // Fallback for older browsers
+                const textArea = document.createElement('textarea');
+                textArea.value = message;
+                document.body.appendChild(textArea);
+                textArea.select();
+                document.execCommand('copy');
+                document.body.removeChild(textArea);
+                showNotification();
+            }
+        }
+        
+        // Show notification
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.remove('hidden');
+            setTimeout(() => {
+                notification.classList.add('hidden');
+            }, 3000);
+        }
+        
+        // Share to WhatsApp
+        function shareToWhatsApp() {
+            const message = generateMessage();
+            if (!message) {
+                alert('Please fill in at least the job title and company name.');
+                return;
+            }
+            const encodedMessage = encodeURIComponent(message);
+            window.open(`https://wa.me/?text=${encodedMessage}`, '_blank');
+        }
+        
+        // Download as text file
+        function downloadAsText() {
+            const message = generateMessage();
+            if (!message) {
+                alert('Please fill in at least the job title and company name.');
+                return;
+            }
+            
+            const jobTitle = document.getElementById('jobTitle').value.trim() || 'job-vacancy';
+            const filename = `${jobTitle.replace(/\s+/g, '-').toLowerCase()}-post.txt`;
+            
+            const blob = new Blob([message], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+        
+        // Reset form
+        function resetForm() {
+            if (confirm('Are you sure you want to reset the form? All data will be lost.')) {
+                document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], input[type="url"], input[type="number"], input[type="date"], textarea').forEach(input => {
+                    input.value = '';
+                });
+                
+                document.querySelectorAll('select').forEach(select => {
+                    select.selectedIndex = 0;
+                });
+                
+                document.querySelectorAll('.checkbox-custom').forEach(cb => {
+                    if (cb.id === 'includeHashtags') {
+                        cb.checked = true;
+                    } else {
+                        cb.checked = false;
+                    }
+                });
+                
+                document.querySelectorAll('.toggle-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                document.querySelectorAll('.emoji-btn').forEach(btn => {
+                    btn.classList.remove('selected');
+                });
+                
+                document.querySelectorAll('input[type="hidden"]').forEach(input => {
+                    input.value = '';
+                });
+                
+                document.getElementById('salarySection').classList.add('hidden');
+                document.getElementById('emailField').classList.add('hidden');
+                document.getElementById('phoneField').classList.add('hidden');
+                document.getElementById('linkField').classList.add('hidden');
+                document.getElementById('walkInField').classList.add('hidden');
+                
+                selectedBenefits = [];
+                
+                // Reset default emoji
+                selectEmoji(document.querySelector('[data-emoji="💼"]'), 'header');
+                document.getElementById('urgency').value = 'Normal';
+                
+                updatePreview();
+            }
+        }
+    </script>
+</body>
+</html>
