@@ -1274,11 +1274,14 @@
         function toggleOtherIndustry() {
             const industrySelect = document.getElementById('industry');
             const otherIndustryField = document.getElementById('otherIndustryField');
+            const otherIndustryInput = document.getElementById('otherIndustry');
             
             if (industrySelect.value === 'Other') {
                 otherIndustryField.classList.remove('hidden');
             } else {
                 otherIndustryField.classList.add('hidden');
+                // Clear the custom industry value when hiding the field
+                otherIndustryInput.value = '';
             }
             updatePreview();
         }
