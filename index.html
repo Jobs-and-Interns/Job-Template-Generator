@@ -253,6 +253,35 @@
         ::-webkit-scrollbar-thumb:hover {
             background: rgba(255, 255, 255, 0.2);
         }
+        
+        /* Dropdown select styling */
+        .dropdown-select {
+            background: rgba(15, 23, 42, 0.95);
+            cursor: pointer;
+        }
+        
+        .dropdown-select option {
+            background: #1a2234;
+            color: white;
+            padding: 10px;
+        }
+        
+        .dropdown-select option:hover,
+        .dropdown-select option:focus {
+            background: #25D366;
+        }
+        
+        /* Multi-select toggle buttons */
+        .toggle-btn.multi-active {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);
+        }
+        
+        /* City dropdown with datalist */
+        .city-input {
+            background: rgba(15, 23, 42, 0.95);
+        }
     </style>
 </head>
 <body class="gradient-bg min-h-screen text-white">
@@ -333,7 +362,7 @@
                             
                             <div>
                                 <label class="block text-sm font-medium text-white/70 mb-2">Industry / Sector</label>
-                                <select id="industry" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none bg-transparent">
+                                <select id="industry" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none dropdown-select">
                                     <option value="">Select Industry</option>
                                     <option value="Technology">Technology</option>
                                     <option value="Finance & Banking">Finance & Banking</option>
@@ -382,12 +411,12 @@
                         
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-white/70 mb-3">Work Arrangement *</label>
+                                <label class="block text-sm font-medium text-white/70 mb-3">Work Arrangement * <span class="text-xs text-white/50">(Select multiple)</span></label>
                                 <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                    <button type="button" onclick="selectWorkType('On-Site')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🏢 On-Site</button>
-                                    <button type="button" onclick="selectWorkType('Remote')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🏠 Remote</button>
-                                    <button type="button" onclick="selectWorkType('Hybrid')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🔄 Hybrid</button>
-                                    <button type="button" onclick="selectWorkType('WFH')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">💻 WFH</button>
+                                    <button type="button" onclick="toggleWorkType('On-Site')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all" data-value="On-Site">🏢 On-Site</button>
+                                    <button type="button" onclick="toggleWorkType('Remote')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all" data-value="Remote">🏠 Remote</button>
+                                    <button type="button" onclick="toggleWorkType('Hybrid')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all" data-value="Hybrid">🔄 Hybrid</button>
+                                    <button type="button" onclick="toggleWorkType('WFH')" class="toggle-btn work-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all" data-value="WFH">💻 WFH</button>
                                 </div>
                                 <input type="hidden" id="workType" value="">
                             </div>
@@ -395,11 +424,15 @@
                             <div class="grid sm:grid-cols-2 gap-4">
                                 <div>
                                     <label class="block text-sm font-medium text-white/70 mb-2">Country *</label>
-                                    <input type="text" id="country" placeholder="e.g., Sri Lanka" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                    <select id="country" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none dropdown-select">
+                                        <option value="">Select Country</option>
+                                    </select>
                                 </div>
                                 <div>
                                     <label class="block text-sm font-medium text-white/70 mb-2">City / Location</label>
-                                    <input type="text" id="city" placeholder="e.g., Colombo" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
+                                    <input type="text" id="city" list="cityList" placeholder="Select or type city" class="input-field city-input w-full px-4 py-3 rounded-xl text-white outline-none">
+                                    <datalist id="cityList">
+                                    </datalist>
                                 </div>
                             </div>
                         </div>
@@ -450,7 +483,7 @@
                                 <div class="grid sm:grid-cols-2 gap-4">
                                     <div>
                                         <label class="block text-sm font-medium text-white/70 mb-2">Currency</label>
-                                        <select id="currency" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none bg-transparent">
+                                        <select id="currency" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none dropdown-select">
                                             <option value="LKR">LKR - Sri Lankan Rupee</option>
                                             <option value="USD">USD - US Dollar</option>
                                             <option value="EUR">EUR - Euro</option>
@@ -464,7 +497,7 @@
                                     </div>
                                     <div>
                                         <label class="block text-sm font-medium text-white/70 mb-2">Salary Period</label>
-                                        <select id="salaryPeriod" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none bg-transparent">
+                                        <select id="salaryPeriod" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none dropdown-select">
                                             <option value="per month">Per Month</option>
                                             <option value="per year">Per Year</option>
                                             <option value="per hour">Per Hour</option>
@@ -588,13 +621,12 @@
                         
                         <div class="space-y-4">
                             <div>
-                                <label class="block text-sm font-medium text-white/70 mb-3">How to Apply *</label>
-                                <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                                    <button type="button" onclick="selectApplyMethod('Email')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">📧 Email</button>
-                                    <button type="button" onclick="selectApplyMethod('WhatsApp')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">💬 WhatsApp</button>
-                                    <button type="button" onclick="selectApplyMethod('Link')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🔗 Apply Link</button>
-                                    <button type="button" onclick="selectApplyMethod('Walk-in')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">🚶 Walk-in</button>
-                                    <button type="button" onclick="selectApplyMethod('Multiple')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">📋 Multiple</button>
+                                <label class="block text-sm font-medium text-white/70 mb-3">How to Apply * <span class="text-xs text-white/50">(Select multiple)</span></label>
+                                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                                    <button type="button" onclick="toggleApplyMethod('Email')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all" data-value="Email">📧 Email</button>
+                                    <button type="button" onclick="toggleApplyMethod('WhatsApp')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all" data-value="WhatsApp">💬 WhatsApp</button>
+                                    <button type="button" onclick="toggleApplyMethod('Link')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all" data-value="Link">🔗 Apply Link</button>
+                                    <button type="button" onclick="toggleApplyMethod('Walk-in')" class="toggle-btn apply-method px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all" data-value="Walk-in">🚶 Walk-in</button>
                                 </div>
                                 <input type="hidden" id="applyMethod" value="">
                             </div>
@@ -779,9 +811,88 @@
     <script>
         // State management
         let selectedBenefits = [];
+        let selectedWorkTypes = [];
+        let selectedApplyMethods = [];
+        
+        // Countries list
+        const countries = [
+            "Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria",
+            "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan",
+            "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cambodia", "Cameroon",
+            "Canada", "Cape Verde", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica",
+            "Croatia", "Cuba", "Cyprus", "Czech Republic", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "East Timor", "Ecuador",
+            "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France",
+            "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau",
+            "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland",
+            "Israel", "Italy", "Ivory Coast", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait",
+            "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg",
+            "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico",
+            "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru",
+            "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman",
+            "Pakistan", "Palau", "Palestine", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal",
+            "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe",
+            "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia",
+            "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria",
+            "Taiwan", "Tajikistan", "Tanzania", "Thailand", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan",
+            "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States", "Uruguay", "Uzbekistan", "Vanuatu", "Vatican City",
+            "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"
+        ];
+        
+        // Major cities list
+        const cities = [
+            // Asia
+            "Tokyo", "Delhi", "Shanghai", "Beijing", "Mumbai", "Osaka", "Dhaka", "Karachi", "Kolkata", "Chennai",
+            "Bangalore", "Hyderabad", "Bangkok", "Seoul", "Jakarta", "Manila", "Singapore", "Hong Kong", "Taipei", "Kuala Lumpur",
+            "Colombo", "Kandy", "Galle", "Negombo", "Jaffna", "Ho Chi Minh City", "Hanoi", "Yangon", "Phnom Penh", "Kathmandu",
+            "Lahore", "Islamabad", "Riyadh", "Dubai", "Abu Dhabi", "Doha", "Kuwait City", "Muscat", "Manama", "Amman",
+            "Beirut", "Tel Aviv", "Jerusalem", "Ankara", "Istanbul", "Baku", "Tbilisi", "Yerevan", "Almaty", "Tashkent",
+            
+            // Europe
+            "London", "Paris", "Berlin", "Madrid", "Rome", "Vienna", "Amsterdam", "Brussels", "Zurich", "Geneva",
+            "Munich", "Frankfurt", "Milan", "Barcelona", "Lisbon", "Dublin", "Edinburgh", "Manchester", "Birmingham", "Glasgow",
+            "Copenhagen", "Stockholm", "Oslo", "Helsinki", "Warsaw", "Prague", "Budapest", "Bucharest", "Sofia", "Athens",
+            "Zagreb", "Belgrade", "Bratislava", "Ljubljana", "Vilnius", "Riga", "Tallinn", "Kyiv", "Minsk", "Moscow",
+            "Saint Petersburg", "Luxembourg", "Monaco", "Malta", "Reykjavik", "Porto", "Valencia", "Seville", "Lyon", "Marseille",
+            
+            // North America
+            "New York", "Los Angeles", "Chicago", "Houston", "Phoenix", "San Francisco", "Seattle", "Boston", "Washington D.C.", "Miami",
+            "Atlanta", "Dallas", "Denver", "San Diego", "Philadelphia", "Las Vegas", "Portland", "Austin", "Nashville", "San Jose",
+            "Toronto", "Montreal", "Vancouver", "Calgary", "Ottawa", "Edmonton", "Winnipeg", "Quebec City", "Hamilton", "Halifax",
+            "Mexico City", "Guadalajara", "Monterrey", "Cancun", "Tijuana", "Puebla", "Havana", "Santo Domingo", "San Juan", "Panama City",
+            
+            // South America
+            "Sao Paulo", "Rio de Janeiro", "Buenos Aires", "Lima", "Bogota", "Santiago", "Caracas", "Quito", "Montevideo", "Asuncion",
+            "La Paz", "Brasilia", "Medellin", "Cali", "Guayaquil", "Cusco", "Cartagena", "Mendoza", "Cordoba", "Salvador",
+            
+            // Africa
+            "Cairo", "Lagos", "Johannesburg", "Cape Town", "Nairobi", "Casablanca", "Accra", "Addis Ababa", "Dar es Salaam", "Khartoum",
+            "Algiers", "Tunis", "Rabat", "Kampala", "Harare", "Lusaka", "Dakar", "Abidjan", "Durban", "Pretoria",
+            "Marrakech", "Mombasa", "Zanzibar", "Victoria Falls", "Windhoek", "Maputo", "Abuja", "Douala", "Kinshasa", "Luanda",
+            
+            // Oceania
+            "Sydney", "Melbourne", "Brisbane", "Perth", "Auckland", "Wellington", "Adelaide", "Gold Coast", "Christchurch", "Hobart",
+            "Darwin", "Canberra", "Queenstown", "Fiji", "Suva", "Port Moresby", "Honolulu", "Guam", "Tahiti", "Samoa"
+        ];
         
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            // Populate country dropdown
+            const countrySelect = document.getElementById('country');
+            countries.forEach(country => {
+                const option = document.createElement('option');
+                option.value = country;
+                option.textContent = country;
+                countrySelect.appendChild(option);
+            });
+            
+            // Populate city datalist
+            const cityList = document.getElementById('cityList');
+            cities.forEach(city => {
+                const option = document.createElement('option');
+                option.value = city;
+                cityList.appendChild(option);
+            });
+            
             // Add event listeners to all inputs
             const inputs = document.querySelectorAll('input, textarea, select');
             inputs.forEach(input => {
@@ -804,10 +915,19 @@
             updatePreview();
         }
         
-        function selectWorkType(type) {
-            document.querySelectorAll('.work-type').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById('workType').value = type;
+        function toggleWorkType(type) {
+            const btn = event.target;
+            const index = selectedWorkTypes.indexOf(type);
+            
+            if (index > -1) {
+                selectedWorkTypes.splice(index, 1);
+                btn.classList.remove('multi-active');
+            } else {
+                selectedWorkTypes.push(type);
+                btn.classList.add('multi-active');
+            }
+            
+            document.getElementById('workType').value = selectedWorkTypes.join(',');
             updatePreview();
         }
         
@@ -840,12 +960,21 @@
             updatePreview();
         }
         
-        function selectApplyMethod(method) {
-            document.querySelectorAll('.apply-method').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
-            document.getElementById('applyMethod').value = method;
+        function toggleApplyMethod(method) {
+            const btn = event.target;
+            const index = selectedApplyMethods.indexOf(method);
             
-            // Show/hide relevant fields
+            if (index > -1) {
+                selectedApplyMethods.splice(index, 1);
+                btn.classList.remove('multi-active');
+            } else {
+                selectedApplyMethods.push(method);
+                btn.classList.add('multi-active');
+            }
+            
+            document.getElementById('applyMethod').value = selectedApplyMethods.join(',');
+            
+            // Show/hide relevant fields based on selected methods
             const emailField = document.getElementById('emailField');
             const phoneField = document.getElementById('phoneField');
             const linkField = document.getElementById('linkField');
@@ -856,25 +985,19 @@
             linkField.classList.add('hidden');
             walkInField.classList.add('hidden');
             
-            switch(method) {
-                case 'Email':
-                    emailField.classList.remove('hidden');
-                    break;
-                case 'WhatsApp':
-                    phoneField.classList.remove('hidden');
-                    break;
-                case 'Link':
-                    linkField.classList.remove('hidden');
-                    break;
-                case 'Walk-in':
-                    walkInField.classList.remove('hidden');
-                    break;
-                case 'Multiple':
-                    emailField.classList.remove('hidden');
-                    phoneField.classList.remove('hidden');
-                    linkField.classList.remove('hidden');
-                    break;
+            if (selectedApplyMethods.includes('Email')) {
+                emailField.classList.remove('hidden');
             }
+            if (selectedApplyMethods.includes('WhatsApp')) {
+                phoneField.classList.remove('hidden');
+            }
+            if (selectedApplyMethods.includes('Link')) {
+                linkField.classList.remove('hidden');
+            }
+            if (selectedApplyMethods.includes('Walk-in')) {
+                walkInField.classList.remove('hidden');
+            }
+            
             updatePreview();
         }
         
@@ -902,7 +1025,7 @@
             const jobTitle = document.getElementById('jobTitle').value.trim();
             const companyName = document.getElementById('companyName').value.trim();
             const industry = document.getElementById('industry').value;
-            const workType = document.getElementById('workType').value;
+            const workTypes = selectedWorkTypes;
             const country = document.getElementById('country').value.trim();
             const city = document.getElementById('city').value.trim();
             const employmentType = document.getElementById('employmentType').value;
@@ -916,7 +1039,7 @@
             const skills = document.getElementById('skills').value.trim();
             const jobDescription = document.getElementById('jobDescription').value.trim();
             const otherBenefits = document.getElementById('otherBenefits').value.trim();
-            const applyMethod = document.getElementById('applyMethod').value;
+            const applyMethods = selectedApplyMethods;
             const email = document.getElementById('email').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const applyLink = document.getElementById('applyLink').value.trim();
@@ -960,20 +1083,21 @@
             message += '\n';
             
             // Location section
-            if (workType || country || city) {
+            if (workTypes.length > 0 || country || city) {
                 message += `📍 *LOCATION*\n`;
                 if (country || city) {
                     const location = [city, country].filter(Boolean).join(', ');
                     message += `• ${location}\n`;
                 }
-                if (workType) {
+                if (workTypes.length > 0) {
                     const workEmoji = {
                         'On-Site': '🏢',
                         'Remote': '🏠',
                         'Hybrid': '🔄',
                         'WFH': '💻'
                     };
-                    message += `• ${workEmoji[workType] || ''} ${workType}\n`;
+                    const workTypesDisplay = workTypes.map(wt => `${workEmoji[wt] || ''} ${wt}`).join(' / ');
+                    message += `• ${workTypesDisplay}\n`;
                 }
                 message += '\n';
             }
@@ -1088,13 +1212,39 @@
             // Hashtags
             if (includeHashtags) {
                 message += `\n`;
-                const hashtags = ['#JobVacancy', '#Hiring', '#NowHiring'];
-                if (country) hashtags.push(`#${country.replace(/\s+/g, '')}Jobs`);
-                if (industry) hashtags.push(`#${industry.replace(/\s+/g, '')}`);
-                if (jobTitle) {
-                    const titleTag = jobTitle.split(' ').slice(0, 2).join('');
-                    hashtags.push(`#${titleTag}`);
+                const hashtags = ['#Jobs_And_Interns', '#JobVacancy', '#Hiring', '#NowHiring'];
+                
+                // Add company name hashtag
+                if (companyName) {
+                    const companyTag = companyName.replace(/[^a-zA-Z0-9]/g, '');
+                    if (companyTag) hashtags.push(`#${companyTag}`);
                 }
+                
+                // Add job title hashtag
+                if (jobTitle) {
+                    const titleTag = jobTitle.replace(/[^a-zA-Z0-9\s]/g, '').split(' ').slice(0, 2).join('');
+                    if (titleTag) hashtags.push(`#${titleTag}`);
+                }
+                
+                // Add urgency hashtag
+                if (urgency && urgency !== 'Normal') {
+                    hashtags.push(`#${urgency}Hiring`);
+                }
+                
+                // Add work arrangement hashtags
+                if (workTypes.length > 0) {
+                    workTypes.forEach(wt => {
+                        const wtTag = wt.replace(/[^a-zA-Z0-9]/g, '');
+                        if (wtTag) hashtags.push(`#${wtTag}Jobs`);
+                    });
+                }
+                
+                // Add country hashtag
+                if (country) hashtags.push(`#${country.replace(/\s+/g, '')}Jobs`);
+                
+                // Add industry hashtag
+                if (industry) hashtags.push(`#${industry.replace(/[^a-zA-Z0-9]/g, '')}`);
+                
                 message += hashtags.join(' ');
             }
             
@@ -1215,6 +1365,7 @@
                 
                 document.querySelectorAll('.toggle-btn').forEach(btn => {
                     btn.classList.remove('active');
+                    btn.classList.remove('multi-active');
                 });
                 
                 document.querySelectorAll('.emoji-btn').forEach(btn => {
@@ -1232,6 +1383,8 @@
                 document.getElementById('walkInField').classList.add('hidden');
                 
                 selectedBenefits = [];
+                selectedWorkTypes = [];
+                selectedApplyMethods = [];
                 
                 // Reset default emoji
                 selectEmoji(document.querySelector('[data-emoji="💼"]'), 'header');
