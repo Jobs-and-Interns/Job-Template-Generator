@@ -1238,15 +1238,27 @@
             
             if (selectedApplyMethods.includes('Email')) {
                 emailField.classList.remove('hidden');
+            } else {
+                // Clear email input when Email method is deselected
+                document.getElementById('email').value = '';
             }
             if (selectedApplyMethods.includes('WhatsApp')) {
                 phoneField.classList.remove('hidden');
+            } else {
+                // Clear phone input when WhatsApp method is deselected
+                document.getElementById('phone').value = '';
             }
             if (selectedApplyMethods.includes('Link')) {
                 linkField.classList.remove('hidden');
+            } else {
+                // Clear link input when Link method is deselected
+                document.getElementById('applyLink').value = '';
             }
             if (selectedApplyMethods.includes('Walk-in')) {
                 walkInField.classList.remove('hidden');
+            } else {
+                // Clear walk-in input when Walk-in method is deselected
+                document.getElementById('walkInDetails').value = '';
             }
             
             updatePreview();
