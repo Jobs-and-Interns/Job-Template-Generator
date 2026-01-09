@@ -834,6 +834,16 @@
                                 <label class="block text-sm font-medium text-white/70 mb-2">Key Skills (comma separated)</label>
                                 <input type="text" id="skills" placeholder="e.g., JavaScript, React, Node.js, MongoDB" class="input-field w-full px-4 py-3 rounded-xl text-white outline-none">
                             </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-3">Gender Preference</label>
+                                <div class="grid grid-cols-3 gap-2">
+                                    <button type="button" onclick="selectGender('Male')" class="toggle-btn gender-pref px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">👨 Male</button>
+                                    <button type="button" onclick="selectGender('Female')" class="toggle-btn gender-pref px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">👩 Female</button>
+                                    <button type="button" onclick="selectGender('Any')" class="toggle-btn gender-pref px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">👥 Any</button>
+                                </div>
+                                <input type="hidden" id="genderPreference" value="">
+                            </div>
                         </div>
                     </div>
 
@@ -1211,6 +1221,13 @@
             updatePreview();
         }
         
+        function selectGender(gender) {
+            document.querySelectorAll('.gender-pref').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('genderPreference').value = gender;
+            updatePreview();
+        }
+        
         function toggleApplyMethod(method) {
             const btn = event.target;
             const index = selectedApplyMethods.indexOf(method);
@@ -1322,6 +1339,7 @@
             const experienceLevel = document.getElementById('experienceLevel').value;
             const qualifications = document.getElementById('qualifications').value.trim();
             const skills = document.getElementById('skills').value.trim();
+            const genderPreference = document.getElementById('genderPreference').value;
             const jobDescription = document.getElementById('jobDescription').value.trim();
             const otherBenefits = document.getElementById('otherBenefits').value.trim();
             const applyMethods = selectedApplyMethods;
@@ -1423,10 +1441,13 @@
             }
             
             // Experience & Requirements
-            if (experienceLevel || qualifications || skills) {
+            if (experienceLevel || qualifications || skills || genderPreference) {
                 message += `📋 *REQUIREMENTS*\n`;
                 if (experienceLevel) {
                     message += `• Experience: ${experienceLevel}\n`;
+                }
+                if (genderPreference) {
+                    message += `• Gender: ${genderPreference}\n`;
                 }
                 if (qualifications) {
                     message += `• Qualifications:\n`;
