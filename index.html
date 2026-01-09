@@ -835,9 +835,38 @@
                                 <div class="grid grid-cols-3 gap-2">
                                     <button type="button" onclick="selectGender(event, 'Male')" class="toggle-btn gender-pref px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">👨 Male</button>
                                     <button type="button" onclick="selectGender(event, 'Female')" class="toggle-btn gender-pref px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">👩 Female</button>
-                                    <button type="button" onclick="selectGender(event, 'Any')" class="toggle-btn gender-pref px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">👥 Any</button>
+                                    <button type="button" onclick="selectGender(event, 'Both')" class="toggle-btn gender-pref px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">👥 Both</button>
                                 </div>
                                 <input type="hidden" id="genderPreference" value="">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-white/70 mb-3">Age Requirement</label>
+                                <div class="space-y-3">
+                                    <div class="grid grid-cols-2 gap-2">
+                                        <button type="button" onclick="selectAgeType('Range')" class="toggle-btn age-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">📊 Age Range</button>
+                                        <button type="button" onclick="selectAgeType('Below')" class="toggle-btn age-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">⬇️ Below Age</button>
+                                        <button type="button" onclick="selectAgeType('Above')" class="toggle-btn age-type px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">⬆️ Above Age</button>
+                                        <button type="button" onclick="selectAgeType('None')" class="toggle-btn age-type active px-4 py-3 rounded-xl border border-white/10 text-sm font-medium hover:bg-white/10 transition-all">❌ No Preference</button>
+                                    </div>
+                                    <input type="hidden" id="ageType" value="None">
+                                    
+                                    <div id="ageRangeField" class="hidden grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label class="block text-xs text-white/50 mb-1">Min Age</label>
+                                            <input type="number" id="ageMin" min="16" max="100" placeholder="e.g., 21" class="input-field w-full px-4 py-2 rounded-xl text-white outline-none">
+                                        </div>
+                                        <div>
+                                            <label class="block text-xs text-white/50 mb-1">Max Age</label>
+                                            <input type="number" id="ageMax" min="16" max="100" placeholder="e.g., 35" class="input-field w-full px-4 py-2 rounded-xl text-white outline-none">
+                                        </div>
+                                    </div>
+                                    
+                                    <div id="ageSingleField" class="hidden">
+                                        <label class="block text-xs text-white/50 mb-1">Age</label>
+                                        <input type="number" id="ageSingle" min="16" max="100" placeholder="e.g., 30" class="input-field w-full px-4 py-2 rounded-xl text-white outline-none">
+                                    </div>
+                                </div>
                             </div>
                             
                             <div>
@@ -1228,6 +1257,27 @@
             updatePreview();
         }
         
+        function selectAgeType(type) {
+            document.querySelectorAll('.age-type').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            document.getElementById('ageType').value = type;
+            
+            // Show/hide age input fields based on type
+            const ageRangeField = document.getElementById('ageRangeField');
+            const ageSingleField = document.getElementById('ageSingleField');
+            
+            ageRangeField.classList.add('hidden');
+            ageSingleField.classList.add('hidden');
+            
+            if (type === 'Range') {
+                ageRangeField.classList.remove('hidden');
+            } else if (type === 'Below' || type === 'Above') {
+                ageSingleField.classList.remove('hidden');
+            }
+            
+            updatePreview();
+        }
+        
         function toggleApplyMethod(method) {
             const btn = event.target;
             const index = selectedApplyMethods.indexOf(method);
@@ -1340,6 +1390,10 @@
             const qualifications = document.getElementById('qualifications').value.trim();
             const skills = document.getElementById('skills').value.trim();
             const genderPreference = document.getElementById('genderPreference').value;
+            const ageType = document.getElementById('ageType').value;
+            const ageMin = document.getElementById('ageMin').value;
+            const ageMax = document.getElementById('ageMax').value;
+            const ageSingle = document.getElementById('ageSingle').value;
             const jobDescription = document.getElementById('jobDescription').value.trim();
             const otherBenefits = document.getElementById('otherBenefits').value.trim();
             const applyMethods = selectedApplyMethods;
@@ -1441,7 +1495,7 @@
             }
             
             // Experience & Requirements
-            if (experienceLevel || qualifications || skills || genderPreference) {
+            if (experienceLevel || qualifications || skills || genderPreference || ageType !== 'None') {
                 message += `📋 *REQUIREMENTS*\n`;
                 if (experienceLevel) {
                     message += `• Experience: ${experienceLevel}\n`;
@@ -1456,7 +1510,34 @@
                     });
                 }
                 if (genderPreference) {
-                    message += `• Gender: ${genderPreference}\n`;
+                    let genderText = '';
+                    if (genderPreference === 'Male') {
+                        genderText = 'Looking for male candidates';
+                    } else if (genderPreference === 'Female') {
+                        genderText = 'Looking for female candidates';
+                    } else if (genderPreference === 'Both') {
+                        genderText = 'Looking for male and female candidates';
+                    }
+                    if (genderText) {
+                        message += `• ${genderText}\n`;
+                    }
+                }
+                if (ageType !== 'None') {
+                    let ageText = '';
+                    if (ageType === 'Range' && ageMin && ageMax) {
+                        ageText = `Age: ${ageMin}-${ageMax} years`;
+                    } else if (ageType === 'Below' && ageSingle) {
+                        ageText = `Age: Below ${ageSingle} years`;
+                    } else if (ageType === 'Above' && ageSingle) {
+                        ageText = `Age: Above ${ageSingle} years`;
+                    } else if (ageType === 'Range' && ageMin && !ageMax) {
+                        ageText = `Age: ${ageMin}+ years`;
+                    } else if (ageType === 'Range' && !ageMin && ageMax) {
+                        ageText = `Age: Up to ${ageMax} years`;
+                    }
+                    if (ageText) {
+                        message += `• ${ageText}\n`;
+                    }
                 }
                 if (skills) {
                     message += `• Skills: ${skills}\n`;
@@ -1697,6 +1778,8 @@
                 document.getElementById('phoneField').classList.add('hidden');
                 document.getElementById('linkField').classList.add('hidden');
                 document.getElementById('walkInField').classList.add('hidden');
+                document.getElementById('ageRangeField').classList.add('hidden');
+                document.getElementById('ageSingleField').classList.add('hidden');
                 
                 selectedBenefits = [];
                 selectedWorkTypes = [];
@@ -1705,6 +1788,15 @@
                 // Reset default emoji
                 selectEmoji(document.querySelector('[data-emoji="💼"]'), 'header');
                 document.getElementById('urgency').value = 'Normal';
+                document.getElementById('ageType').value = 'None';
+                
+                // Reset age type to "No Preference"
+                document.querySelectorAll('.age-type').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.age-type').forEach(btn => {
+                    if (btn.textContent.includes('No Preference')) {
+                        btn.classList.add('active');
+                    }
+                });
                 
                 updatePreview();
             }
