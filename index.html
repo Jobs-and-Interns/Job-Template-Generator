@@ -419,6 +419,7 @@
         
         .checkbox-custom {
             appearance: none;
+            /* 22px on mobile for better touch targets, 20px on desktop for visual balance */
             width: 22px;
             height: 22px;
             min-width: 22px;
@@ -681,7 +682,7 @@
                             
                             <div>
                                 <label class="block text-sm font-medium text-white/70 mb-2">Post Emoji</label>
-                                <div class="grid grid-cols-4 sm:flex sm:flex-wrap gap-2">
+                                <div class="grid grid-cols-4 sm:grid-cols-8 gap-2">
                                     <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="🚀" class="emoji-btn rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10 active:bg-white/15">🚀</button>
                                     <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="💼" class="emoji-btn rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10 active:bg-white/15">💼</button>
                                     <button type="button" onclick="selectEmoji(this, 'header')" data-emoji="🔥" class="emoji-btn rounded-lg border border-white/10 flex items-center justify-center text-xl hover:bg-white/10 active:bg-white/15">🔥</button>
@@ -1142,8 +1143,8 @@
     <!-- Footer -->
     <footer class="relative z-10 py-6 sm:py-8 px-4 border-t border-white/5">
         <div class="max-w-7xl mx-auto">
-            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
-                <div class="flex flex-col sm:flex-row items-center gap-3 text-center sm:text-left">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-5">
+                <div class="flex flex-col sm:flex-row items-center gap-3 sm:gap-4 text-center sm:text-left">
                     <img src="https://res.cloudinary.com/dkj22lm1g/image/upload/v1760795480/Jobs-and-Interns-Logo_lj5os5.png" alt="Jobs and Interns Logo" class="w-8 h-8 rounded-lg flex-shrink-0">
                     <div>
                         <p class="text-xs sm:text-sm text-white/50">Job Template Generator by <a href="https://jobs-and-interns.github.io/" target="_blank" rel="noopener noreferrer" class="text-brand-red hover:text-accent-light transition-colors">Jobs and Interns</a></p>
